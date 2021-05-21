@@ -1,0 +1,12 @@
+uoc.dpoo
+uoc.dpoo.classifier.bayes
+uoc.dpoo.common
+uoc.dpoo.exceptions
+uoc.dpoo.io
+uoc.dpoo.menu
+uoc.dpoo.metrics
+uoc.dpoo.preprocessing
+uoc.dpoo.preprocessing.impl
+uoc.dpoo.statistics
+uoc.dpoo.statistics.impl
+uoc.dpoo.trainTest
