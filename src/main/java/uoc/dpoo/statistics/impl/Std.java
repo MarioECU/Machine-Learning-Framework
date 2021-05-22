@@ -37,12 +37,6 @@ public class Std extends Statistics<Double> {
 	 * @return The std element in the list
 	 */
 	protected double process(List<String> values) {
-		for (String value : values) {
-			if (value == null) {
-				return Double.NaN;
-			}
-		}
-
 		double[] vals = super.convertToDouble(values).toArray();
 
 		if (vals.length == 0) {

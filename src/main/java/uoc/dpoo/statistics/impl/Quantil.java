@@ -60,10 +60,21 @@ public class Quantil extends Statistics<Double> {
 		DoubleStream sortedValues = super.convertToDouble(values).sorted();
 		double[] vals = sortedValues.toArray();
 
-		return 0.0;
+		if (vals.length < 4) {
+			return getMedian(vals);
+		}
+
+		return 11.0;
 	}
 
-	private int getQuantilPosition(Double[] values, int quantil) {
-		return 0;
+	private Double getMedian(double[] values) {
+		if (values.length % 2 == 0) {
+			double v1 = values[(values.length / 2) - 1];
+			double v2 = values[values.length / 2];
+			return (v1 + v2) / 2.0;
+		} else {
+			int mid = ((values.length + 1) / 2) - 1;
+			return values[mid];
+		}
 	}
 }

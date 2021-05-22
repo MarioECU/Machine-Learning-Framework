@@ -28,7 +28,7 @@ public class Count extends Statistics<Long> {
 	 */
 	public Long process(String column) throws CSVException {
 		List<String> values = csv.getFeature(column).getValues();
-		return values.stream().count();
+		return values.stream().filter(value -> value != null).count();
 	}
 
 	/**

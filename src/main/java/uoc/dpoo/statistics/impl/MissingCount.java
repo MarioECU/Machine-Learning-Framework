@@ -6,8 +6,10 @@ import uoc.dpoo.io.Feature;
 import uoc.dpoo.io.FeatureType;
 import uoc.dpoo.statistics.Statistics;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.DoubleStream;
+import java.util.stream.Stream;
 
 public class MissingCount extends Statistics<Long> {
 
@@ -28,7 +30,13 @@ public class MissingCount extends Statistics<Long> {
 	 */
 	public Long process(String column) throws CSVException {
 		List<String> values = csv.getFeature(column).getValues();
-		return values.stream().filter(value -> super.isMissingValue(value)).count();
+
+		if (csv.getFeature(column).getType() == FeatureType.NUMBER) {
+			return missingValuesNumber(values);
+		} else {
+			return missingValuesOther(values);
+		}
+
 	}
 
 	/**
@@ -48,8 +56,6 @@ public class MissingCount extends Statistics<Long> {
 	 * @return The missing elements in the list
 	 */
 	protected long missingValuesNumber(List<String> values) {
-		DoubleStream ds = super.convertToDouble(values);
-		return ds.filter(value -> super.isMissingValue(String.valueOf(value))).count();
+		return values.size() - super.convertToDouble(values).count();
 	}
-
 }

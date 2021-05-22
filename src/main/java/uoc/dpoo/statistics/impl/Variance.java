@@ -26,7 +26,22 @@ public class Variance extends Statistics<Double> {
 	 */
 	public Double process(String column) throws CSVException {
 		List<String> values = csv.getFeature(column).getValues();
-		return process(values);
+		
+		double[] vals = super.convertToDouble(values).toArray();
+
+		if (vals.length == 0) {
+			return Double.NaN;
+		}
+
+		double average = super.convertToDouble(values).average().getAsDouble();
+		double variance = 0.0;
+
+		for (double value : vals) {
+			variance += Math.pow(value - average, 2);
+		}
+
+		variance = variance / vals.length;
+		return variance;
 	}
 
 	/**
