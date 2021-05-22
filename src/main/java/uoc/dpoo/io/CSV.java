@@ -195,8 +195,9 @@ public class CSV implements Cloneable{
      * @return Number of rows in the CSV
      */
     public int getRowsNumber() {
-        //TODO Complete code
-        throw new UnsupportedOperationException();
+    	int n = 0;
+    	n += features.values().stream().findFirst().get().getValues().size();
+    	return n;
     }
 
     /**
@@ -244,8 +245,13 @@ public class CSV implements Cloneable{
      * @return A hashMap where the key is the name of the feature and the value the value of the feature in the row
      */
     public Map<String, String> getRow(int row) throws CSVException {
-        //TODO complete code
-        throw new UnsupportedOperationException();
+    	if (row < 0 || row >= getRowsNumber())
+    		throw new CSVException(CSVException.ROW_OUT_OF_BOUNDS, String.valueOf(row));
+    	Map<String, String> r = new HashMap<>();
+    	features.forEach((k, v) -> {
+    		r.put(k, v.getValues().get(row));
+    	});
+    	return r;
     }
 
     /**

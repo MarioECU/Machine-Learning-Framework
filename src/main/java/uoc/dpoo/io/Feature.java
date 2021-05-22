@@ -119,8 +119,10 @@ public class Feature implements Cloneable {
      * Set the type of the feature
      * @param type feature type
      */
-    public void setType(FeatureType type) {
-    	this.type = type;
+    public void setType(FeatureType type) throws CSVException {
+    	fixType();
+    	if (!type.equals(this.type))
+    		throw new CSVException(CSVException.INVALID_FEATURE_TYPE, type.name());
     }
 
     @Override
