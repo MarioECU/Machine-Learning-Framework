@@ -10,24 +10,24 @@ import java.util.stream.IntStream;
 
 public class RemoveMissingData extends Preprocessing {
 
+	/**
+	 * Constructor
+	 * 
+	 * @param csv CSV to which remove the missing data
+	 */
+	public RemoveMissingData(CSV csv) {
+		super(csv);
+	}
 
-    /**
-     * Constructor
-     * @param csv CSV to which remove the missing data
-     */
-    public RemoveMissingData(CSV csv) {
-        //TODO Complete code
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Performs the NA removal process on the whole CSV
-     * @return CSV without any rows containing NAs
-     * @throws Exception when errors happen
-     */
-    public CSV process() throws Exception {
-        //TODO Complete code
-        throw new UnsupportedOperationException();
-    }
+	/**
+	 * Performs the NA removal process on the whole CSV
+	 * 
+	 * @return CSV without any rows containing NAs
+	 * @throws Exception when errors happen
+	 */
+	public CSV process() throws Exception {
+		// TODO Complete code
+		throw new UnsupportedOperationException();
+	}
 
 }

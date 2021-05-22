@@ -36,6 +36,19 @@ public class Variance extends Statistics<Double> {
 	 * @return The variance element in the list
 	 */
 	protected Double process(List<String> values) {
-		return Double.NaN;
+		if (values.contains(null)) {
+			return Double.NaN;
+		}
+
+		DoubleStream vals = super.convertToDouble(values);
+		double average = vals.average().getAsDouble();
+		double variance = 0.0;
+
+		for (double value : vals.toArray()) {
+			variance += Math.pow(value - average, 2);
+		}
+
+		variance = Math.sqrt(variance / vals.count());
+		return variance;
 	}
 }

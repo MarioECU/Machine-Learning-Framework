@@ -5,6 +5,7 @@ import uoc.dpoo.io.Feature;
 import uoc.dpoo.statistics.Statistics;
 
 import java.util.List;
+import java.util.stream.DoubleStream;
 
 public class Std extends Statistics<Double> {
 
@@ -24,7 +25,8 @@ public class Std extends Statistics<Double> {
 	 * @return The std element in the feature
 	 */
 	public Double process(String column) {
-		return null;
+		// TODO Complete code
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -34,8 +36,16 @@ public class Std extends Statistics<Double> {
 	 * @return The std element in the list
 	 */
 	protected double process(List<String> values) {
-		// TODO Complete code
-		throw new UnsupportedOperationException();
+		DoubleStream vals = super.convertToDouble(values);
+		double average = vals.average().getAsDouble();
+		double variance = 0.0;
+		
+		for (double value : vals.toArray()) {
+			variance += Math.pow(value - average, 2);
+		}
+		
+		double std =  Math.sqrt(variance / vals.count());
+		return std;
 	}
 
 }

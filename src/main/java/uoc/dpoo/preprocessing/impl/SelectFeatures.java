@@ -16,8 +16,7 @@ public class SelectFeatures extends Preprocessing {
      * @param csv CSV to normalize
      */
     public SelectFeatures(CSV csv) {
-        //TODO Complete code
-        throw new UnsupportedOperationException();
+        super(csv);
     }
 
     /**

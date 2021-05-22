@@ -24,9 +24,8 @@ public class Count extends Statistics<Long> {
 	 * 
 	 * @param column Column to process the metric
 	 * @return The number of elements in the column
-	 * @throws Exception
 	 */
-	public Long process(String column) throws Exception {
+	public Long process(String column) {
 		// TODO Complete code
 		throw new UnsupportedOperationException();
 	}
