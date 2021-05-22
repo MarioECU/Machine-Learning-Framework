@@ -37,16 +37,26 @@ public class Std extends Statistics<Double> {
 	 * @return The std element in the list
 	 */
 	protected double process(List<String> values) {
-		DoubleStream vals = super.convertToDouble(values);
-		double average = vals.average().getAsDouble();
+		for (String value : values) {
+			if (value == null) {
+				return Double.NaN;
+			}
+		}
+
+		double[] vals = super.convertToDouble(values).toArray();
+
+		if (vals.length == 0) {
+			return Double.NaN;
+		}
+
+		double average = super.convertToDouble(values).average().getAsDouble();
 		double variance = 0.0;
 
-		for (double value : vals.toArray()) {
+		for (double value : vals) {
 			variance += Math.pow(value - average, 2);
 		}
 
-		double std = Math.sqrt(variance / vals.count());
+		double std = Math.sqrt(variance / vals.length);
 		return std;
 	}
-
 }
