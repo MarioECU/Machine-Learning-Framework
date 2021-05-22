@@ -2,10 +2,11 @@ package uoc.dpoo.io;
 
 import uoc.dpoo.exceptions.CSVException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Feature implements Cloneable{
+public class Feature implements Cloneable {
 
     /**
      * The name feature
@@ -21,13 +22,14 @@ public class Feature implements Cloneable{
     private FeatureType type;
 
     /**
-     * Constuctor
+     * Constructor
      * @param name The name of the feature
      * @throws CSVException Raised if the name is null
      */
     public Feature(String name) throws CSVException {
-        //TODO complete code
-        throw new UnsupportedOperationException();
+    	setName(name);
+    	values = new ArrayList<>();
+    	type = FeatureType.OTHER;
     }
 
     /**
@@ -37,8 +39,9 @@ public class Feature implements Cloneable{
      * @throws CSVException Raised if the name is null
      */
     public Feature(String name, List<String> values) throws CSVException {
-        //TODO complete code
-        throw new UnsupportedOperationException();
+    	setName(name);
+    	this.values = values;
+    	fixType();
     }
 
     /**
@@ -47,8 +50,10 @@ public class Feature implements Cloneable{
      * if is not a number or the values is empty the type is FeatureType.OTHER
      */
     public void fixType(){
-        //TODO complete code
-        throw new UnsupportedOperationException();
+    	if (isNumber()) 
+    		type = FeatureType.NUMBER;
+    	else 
+    		type = FeatureType.OTHER;
     }
 
     /**
@@ -57,8 +62,12 @@ public class Feature implements Cloneable{
      * @return True if all values are numbers, otherwise returns false
      */
     private boolean isNumber(){
-        //TODO complete code
-        throw new UnsupportedOperationException();
+    	try {
+    		values.stream().forEach(value -> Double.parseDouble(value));
+        	return true;
+    	} catch (NumberFormatException nfe) {
+    		return false;
+    	}
     }
 
     /**
@@ -67,8 +76,10 @@ public class Feature implements Cloneable{
      * @throws CSVException Raised when name is null
      */
     private void setName(String name) throws CSVException{
-        //TODO complete code
-        throw new UnsupportedOperationException();
+    	if (name == null) {
+    		throw new CSVException(CSVException.NULL_FEATURE_NAME);
+    	}
+    	this.name = name;
     }
 
     /**
@@ -76,8 +87,7 @@ public class Feature implements Cloneable{
      * @return The name of the feature
      */
     public String getName() {
-        //TODO complete code
-        throw new UnsupportedOperationException();
+    	return name;
     }
 
     /**
@@ -85,8 +95,7 @@ public class Feature implements Cloneable{
      * @return All values stored in the feature
      */
     public List<String> getValues() {
-        //TODO complete code
-        throw new UnsupportedOperationException();
+    	return values;
     }
 
     /**
@@ -94,8 +103,8 @@ public class Feature implements Cloneable{
      * @param values List of the string with the feature values
      */
     public void setValues(List<String> values) {
-        //TODO complete code
-        throw new UnsupportedOperationException();
+    	this.values = values;
+    	fixType();
     }
 
     /**
@@ -103,8 +112,7 @@ public class Feature implements Cloneable{
      * @return feature type
      */
     public FeatureType getType() {
-        //TODO complete code
-        throw new UnsupportedOperationException();
+    	return type;
     }
 
     /**
@@ -112,16 +120,31 @@ public class Feature implements Cloneable{
      * @param type feature type
      */
     public void setType(FeatureType type) {
-        //TODO complete code
-        throw new UnsupportedOperationException();
+    	this.type = type;
     }
 
     @Override
-    public boolean equals(Object o) {
-        //TODO complete code
-        throw new UnsupportedOperationException();
-    }
-
+	public boolean equals(Object o) {
+		if (o == null)
+			return false;
+		if (this == o)
+			return true;
+		if (getClass() != o.getClass())
+			return false;
+		Feature other = (Feature) o;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (values == null) {
+			if (other.values != null)
+				return false;
+		} else if (!values.equals(other.values))
+			return false;
+		return true;
+	}
+    
     @Override
     public int hashCode() {
         return Objects.hash(name, values, type);
@@ -129,7 +152,6 @@ public class Feature implements Cloneable{
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        //TODO complete code
-        throw new UnsupportedOperationException();
+        return super.clone();
     }
 }
