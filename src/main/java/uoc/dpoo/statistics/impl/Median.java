@@ -25,9 +25,9 @@ public class Median extends Statistics<Double> {
 	 * @param column Column to process the metric
 	 * @return The median element in the feature
 	 */
-	public Double process(String column) {
-		// TODO Complete code
-		throw new UnsupportedOperationException();
+	public Double process(String column) throws CSVException {
+		List<String> values = csv.getFeature(column).getValues();
+		return process(values);
 	}
 
 	/**
@@ -37,16 +37,20 @@ public class Median extends Statistics<Double> {
 	 * @return The median element in the feature
 	 */
 	protected Double process(List<String> values) {
-		DoubleStream sortedValues = super.convertToDouble(values).sorted();
-		double[] vals = sortedValues.toArray();
-
-		if (vals.length % 2 == 0) {
-			double v1 = vals[(vals.length / 2) - 1];
-			double v2 = vals[vals.length / 2];
-			return (v1 + v2) / 2.0;
+		if (super.convertToDouble(values).count() == 0) {
+			return Double.NaN;
 		} else {
-			int mid = ((vals.length + 1) / 2) - 1;
-			return vals[mid];
+			DoubleStream sortedValues = super.convertToDouble(values).sorted();
+			double[] vals = sortedValues.toArray();
+
+			if (vals.length % 2 == 0) {
+				double v1 = vals[(vals.length / 2) - 1];
+				double v2 = vals[vals.length / 2];
+				return (v1 + v2) / 2.0;
+			} else {
+				int mid = ((vals.length + 1) / 2) - 1;
+				return vals[mid];
+			}
 		}
 	}
 }

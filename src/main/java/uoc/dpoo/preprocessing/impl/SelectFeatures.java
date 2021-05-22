@@ -10,35 +10,37 @@ import java.util.List;
 
 public class SelectFeatures extends Preprocessing {
 
+	/**
+	 * Constructor
+	 * 
+	 * @param csv CSV to normalize
+	 */
+	public SelectFeatures(CSV csv) {
+		super(csv);
+	}
 
-    /**
-     * Constructor
-     * @param csv CSV to normalize
-     */
-    public SelectFeatures(CSV csv) {
-        super(csv);
-    }
+	/**
+	 * Perform the selection of features of the CSV
+	 * 
+	 * @param column name of the column (feature) to keep
+	 * @return csv with the selected feature
+	 * @throws Exception raised if errors happen
+	 */
+	public CSV process(String column) throws Exception {
+		// TODO Complete code
+		throw new UnsupportedOperationException();
+	}
 
-    /**
-     * Perform the selection of features of the CSV
-     * @param column name of the column (feature) to keep
-     * @return csv with the selected feature
-     * @throws Exception raised if errors happen
-     */
-    public CSV process(String column) throws Exception {
-        //TODO Complete code
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Perform the selection of features of the CSV
-     * @param columns name of the columns (features) to keep
-     * @return csv with the selected features
-     * @throws Exception raised if errors happen
-     */
-    public CSV process(String[] columns) throws Exception {
-        //TODO Complete code
-        throw new UnsupportedOperationException();
-    }
+	/**
+	 * Perform the selection of features of the CSV
+	 * 
+	 * @param columns name of the columns (features) to keep
+	 * @return csv with the selected features
+	 * @throws Exception raised if errors happen
+	 */
+	public CSV process(String[] columns) throws Exception {
+		// TODO Complete code
+		throw new UnsupportedOperationException();
+	}
 
 }

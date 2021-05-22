@@ -1,5 +1,6 @@
 package uoc.dpoo.statistics;
 
+import uoc.dpoo.exceptions.CSVException;
 import uoc.dpoo.io.CSV;
 import uoc.dpoo.io.FeatureType;
 import uoc.dpoo.statistics.impl.*;
@@ -40,8 +41,9 @@ public abstract class Statistics<T> {
 	 * 
 	 * @param column Column to process the metric
 	 * @return A value than contains the metric.
+	 * @throws CSVException
 	 */
-	public abstract T process(String column);
+	public abstract T process(String column) throws CSVException;
 
 	/**
 	 * Prints a matrix with all the metrics to all the statistics
@@ -159,10 +161,8 @@ public abstract class Statistics<T> {
 					Double newValue = Double.parseDouble(value);
 					newValues.add(newValue);
 				} catch (NumberFormatException e) {
-					System.out.println("Dropped not number value: " + value);
+					e.printStackTrace();
 				}
-			} else {
-				System.out.println("Dropped null value: " + value);
 			}
 		}
 		return newValues.stream().mapToDouble(value -> value);

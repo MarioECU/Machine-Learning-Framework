@@ -1,11 +1,11 @@
 package uoc.dpoo.statistics.impl;
 
+import uoc.dpoo.exceptions.CSVException;
 import uoc.dpoo.io.CSV;
-import uoc.dpoo.io.Feature;
 import uoc.dpoo.statistics.Statistics;
 
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.stream.DoubleStream;
 
 public class Max extends Statistics<Double> {
 
@@ -22,11 +22,11 @@ public class Max extends Statistics<Double> {
 	 * Calculate the maximum element in the feature.
 	 * 
 	 * @param column Column to process the metric
-	 * @return The minimum element in the feature
+	 * @return The maximun element in the feature
 	 */
-	public Double process(String column) {
-		// TODO Complete code
-		throw new UnsupportedOperationException();
+	public Double process(String column) throws CSVException {
+		List<String> values = csv.getFeature(column).getValues();
+		return process(values);
 	}
 
 	/**
@@ -36,6 +36,10 @@ public class Max extends Statistics<Double> {
 	 * @return The maximum element in the feature
 	 */
 	protected Double process(List<String> values) {
-		return super.convertToDouble(values).max().getAsDouble();
+		if (super.convertToDouble(values).count() == 0) {
+			return Double.NaN;
+		} else {
+			return super.convertToDouble(values).max().getAsDouble();
+		}
 	}
 }

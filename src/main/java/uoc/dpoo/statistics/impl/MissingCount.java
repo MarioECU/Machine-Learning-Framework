@@ -1,11 +1,13 @@
 package uoc.dpoo.statistics.impl;
 
+import uoc.dpoo.exceptions.CSVException;
 import uoc.dpoo.io.CSV;
 import uoc.dpoo.io.Feature;
 import uoc.dpoo.io.FeatureType;
 import uoc.dpoo.statistics.Statistics;
 
 import java.util.List;
+import java.util.stream.DoubleStream;
 
 public class MissingCount extends Statistics<Long> {
 
@@ -24,9 +26,9 @@ public class MissingCount extends Statistics<Long> {
 	 * @param column Column to process the metric
 	 * @return The missing elements in the feature
 	 */
-	public Long process(String column) {
-		// TODO Complete code
-		throw new UnsupportedOperationException();
+	public Long process(String column) throws CSVException {
+		List<String> values = csv.getFeature(column).getValues();
+		return values.stream().filter(value -> super.isMissingValue(value)).count();
 	}
 
 	/**
@@ -36,8 +38,7 @@ public class MissingCount extends Statistics<Long> {
 	 * @return The missing elements in the list
 	 */
 	protected long missingValuesOther(List<String> values) {
-		// TODO Complete code
-		throw new UnsupportedOperationException();
+		return values.stream().filter(value -> super.isMissingValue(value)).count();
 	}
 
 	/**
@@ -47,8 +48,8 @@ public class MissingCount extends Statistics<Long> {
 	 * @return The missing elements in the list
 	 */
 	protected long missingValuesNumber(List<String> values) {
-		// TODO Complete code
-		throw new UnsupportedOperationException();
+		DoubleStream ds = super.convertToDouble(values);
+		return ds.filter(value -> super.isMissingValue(String.valueOf(value))).count();
 	}
 
 }

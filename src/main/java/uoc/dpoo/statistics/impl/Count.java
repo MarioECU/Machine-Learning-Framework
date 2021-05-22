@@ -1,5 +1,6 @@
 package uoc.dpoo.statistics.impl;
 
+import uoc.dpoo.exceptions.CSVException;
 import uoc.dpoo.io.CSV;
 import uoc.dpoo.io.Feature;
 import uoc.dpoo.io.FeatureType;
@@ -25,9 +26,9 @@ public class Count extends Statistics<Long> {
 	 * @param column Column to process the metric
 	 * @return The number of elements in the column
 	 */
-	public Long process(String column) {
-		// TODO Complete code
-		throw new UnsupportedOperationException();
+	public Long process(String column) throws CSVException {
+		List<String> values = csv.getFeature(column).getValues();
+		return values.stream().count();
 	}
 
 	/**
@@ -37,13 +38,7 @@ public class Count extends Statistics<Long> {
 	 * @return the number of no missing elements.
 	 */
 	protected long process(List<String> values) {
-		long c = 0;
-		for (String value : values) {
-			if (super.isNotMissingValue(value)) {
-				c++;
-			}
-		}
-		return c;
+		return values.stream().filter(value -> super.isNotMissingValue(value)).count();
 	}
 
 	/**
@@ -54,10 +49,8 @@ public class Count extends Statistics<Long> {
 	 * @return the number of no missing elements.
 	 */
 	protected long countNumbers(List<String> values) {
-		long c = 0;
 		DoubleStream ds = super.convertToDouble(values);
-
-		return c;
+		return ds.filter(value -> super.isNotMissingValue(String.valueOf(value))).count();
 	}
 
 }

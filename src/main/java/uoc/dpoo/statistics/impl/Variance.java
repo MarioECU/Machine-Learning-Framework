@@ -1,5 +1,6 @@
 package uoc.dpoo.statistics.impl;
 
+import uoc.dpoo.exceptions.CSVException;
 import uoc.dpoo.io.CSV;
 import uoc.dpoo.statistics.Statistics;
 
@@ -23,9 +24,9 @@ public class Variance extends Statistics<Double> {
 	 * @param column column to process the metric
 	 * @return The variance element in the feature
 	 */
-	public Double process(String column) {
-		// TODO Complete code
-		throw new UnsupportedOperationException();
+	public Double process(String column) throws CSVException {
+		List<String> values = csv.getFeature(column).getValues();
+		return process(values);
 	}
 
 	/**
@@ -36,19 +37,20 @@ public class Variance extends Statistics<Double> {
 	 * @return The variance element in the list
 	 */
 	protected Double process(List<String> values) {
-		if (values.contains(null)) {
+		if (values.contains(null) || super.convertToDouble(values).count() == 0) {
 			return Double.NaN;
+		} else {
+			DoubleStream vals = super.convertToDouble(values);
+			double average = vals.average().getAsDouble();
+			double variance = 0.0;
+
+			for (double value : vals.toArray()) {
+				variance += Math.pow(value - average, 2);
+			}
+
+			variance = Math.sqrt(variance / vals.count());
+			return variance;
 		}
 
-		DoubleStream vals = super.convertToDouble(values);
-		double average = vals.average().getAsDouble();
-		double variance = 0.0;
-
-		for (double value : vals.toArray()) {
-			variance += Math.pow(value - average, 2);
-		}
-
-		variance = Math.sqrt(variance / vals.count());
-		return variance;
 	}
 }

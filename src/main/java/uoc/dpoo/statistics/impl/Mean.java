@@ -23,9 +23,9 @@ public class Mean extends Statistics<Double> {
 	 * @param column Column to process the metric
 	 * @return The mean element in the feature
 	 */
-	public Double process(String column){
-		// TODO Complete code
-		throw new UnsupportedOperationException();
+	public Double process(String column) throws CSVException {
+		List<String> values = csv.getFeature(column).getValues();
+		return process(values);
 	}
 
 	/**
@@ -35,6 +35,10 @@ public class Mean extends Statistics<Double> {
 	 * @return The mean element in the feature
 	 */
 	protected Double process(List<String> values) {
-		return super.convertToDouble(values).average().getAsDouble();
+		if (super.convertToDouble(values).count() == 0) {
+			return Double.NaN;
+		} else {
+			return super.convertToDouble(values).average().getAsDouble();
+		}
 	}
 }

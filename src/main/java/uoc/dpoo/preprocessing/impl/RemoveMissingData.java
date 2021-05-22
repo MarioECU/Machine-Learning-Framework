@@ -15,6 +15,7 @@ public class RemoveMissingData extends Preprocessing {
 	 * 
 	 * @param csv CSV to which remove the missing data
 	 */
+	
 	public RemoveMissingData(CSV csv) {
 		super(csv);
 	}
@@ -26,8 +27,14 @@ public class RemoveMissingData extends Preprocessing {
 	 * @throws Exception when errors happen
 	 */
 	public CSV process() throws Exception {
-		// TODO Complete code
-		throw new UnsupportedOperationException();
+		CSV cleanCSV = new CSV(csv.getPath());
+
+		for (int i = 0; i < csv.getRowsNumber(); i++) {
+			Map<String, String> row = csv.getRow(i);
+//			featureName, featureValue
+		}
+
+		return cleanCSV;
 	}
 
 }
