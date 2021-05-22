@@ -34,62 +34,70 @@ public class CSV implements Cloneable{
 
     /**
      * Constructor
-     * @param path Path where the csv is stored.
-     * @throws Exception Raised when there are a problem reading the file or procesing the features
+     * @param path Path where the CSV is stored.
+     * @throws Exception Raised when there are a problem reading the file or processing the features
      */
     public CSV(String path) throws Exception {
-        //TODO default separator is ;
-        throw new UnsupportedOperationException();
+    	this.path = path;
+    	sep = ';';
+    	missingValues = List.of("", " ");
+    	load();
     }
 
     /**
      * Constructor
-     * @param path Path where the csv is stored.
+     * @param path Path where the CSV is stored.
      * @param sep Separator used to split the lines into features.
-     * @throws Exception Raised when there are a problem reading the file or procesing the features
+     * @throws Exception Raised when there are a problem reading the file or processing the features
      */
     public CSV(String path, char sep) throws Exception {
-        //TODO default missingValues are "" and " "
-        throw new UnsupportedOperationException();
+    	this.path = path;
+    	this.sep = sep;
+    	missingValues = List.of("", " ");
+    	load();
     }
 
     /**
      *
-     * @param path Path where the csv is stored.
+     * @param path Path where the CSV is stored.
      * @param sep Separator used to split the lines into features.
      * @param missingValues List of string that will be processed as missingValues
-     * @throws Exception Raised when there are a problem reading the file or procesing the features
+     * @throws Exception Raised when there are a problem reading the file or processing the features
      */
     public CSV(String path, char sep, String... missingValues) throws Exception {
-        //TODO complete code
-        throw new UnsupportedOperationException();
+    	this.path = path;
+    	this.sep = sep;
+    	this.missingValues = Arrays.asList(missingValues);
+    	load();
     }
 
     /**
      * Private constructor, used to clone the object. Only calls load when features is empty
-     * @param path Path where the csv is stored.
+     * @param path Path where the CSV is stored.
      * @param sep Separator used to split the lines into features.
      * @param missingValues List of string that will be processed as missingValues
      * @param features Map with all the features identified by name
-     * @throws Exception Raised when there are a problem reading the file or procesing the features
+     * @throws Exception Raised when there are a problem reading the file or processing the features
      */
     private CSV(String path, char sep, List<String> missingValues, Map<String, Feature> features) throws Exception {
-        //TODO complete code
-        throw new UnsupportedOperationException();
+        this.path = path;
+        this.sep = sep;
+        this.missingValues = missingValues;
+        this.features = features;
     }
 
     /**
      * Loads the data from CSV file to the instance.
-     * @throws Exception Raised when there are a problem reading the file or procesing the features
+     * @throws Exception Raised when there are a problem reading the file or processing the features
      */
     private void load() throws Exception {
-        CSVParser parser = new CSVParserBuilder().withSeparator(sep).build();
+    	CSVParser parser = new CSVParserBuilder().withSeparator(sep).build();
         CSVReader reader = new CSVReaderBuilder(Files.newBufferedReader(Paths.get(path))).withCSVParser(parser).build(); 
-		//NOTA: Si línea anterior causa errores en entornos Windows, SUBSTITUIR por esta: CSVReader reader = new CSVReaderBuilder(Files.newBufferedReader(Paths.get(new File(path).toURI()))).withCSVParser(parser).build();
+		//NOTA: Si linea anterior causa errores en entornos Windows, SUBSTITUIR por esta: 
+        //CSVReader reader = new CSVReaderBuilder(Files.newBufferedReader(Paths.get(new File(path).toURI()))).withCSVParser(parser).build();
+        features = new HashMap<>();
         List<String> columns = readColumnsName(reader);
         readValues(reader, columns);
-        //TODO Check if you need to do something with the features
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -97,12 +105,14 @@ public class CSV implements Cloneable{
      * For each column create the key and add a new Feature.
      * @param reader CSVReader used to read the CSV
      * @return List with columns names in the same order as read
-     * @throws Exception Raised when there are a problem reading the file or procesing the features
+     * @throws Exception Raised when there are a problem reading the file or processing the features
      */
     private List<String> readColumnsName(CSVReader reader) throws Exception {
         String[] columnsNames = reader.readNext().clone();
-        //TODO fill features
-        throw new UnsupportedOperationException();
+        for (String column : columnsNames) {
+        	this.features.put(column, new Feature(column));
+        }
+        return Arrays.asList(columnsNames);
     }
 
     /**
@@ -111,14 +121,16 @@ public class CSV implements Cloneable{
      * - Check the value is in missingValues and map it to null.
      * - Insert the value in values.
      * @param reader CSVReader used to read the CSV
-     * @throws Exception Raised when there are a problem reading the file or procesing the features
+     * @throws Exception Raised when there are a problem reading the file or processing the features
      */
     private void readValues(CSVReader reader, List<String> columns) throws Exception {
         String[] line;
         while((line = reader.readNext()) != null){
-            //TODO complete the code
+        	List<String> s = getValuesWithoutMissing(line);
+        	for (int i = 0; i < columns.size(); i++) {
+        		features.get(columns.get(i)).getValues().add(s.get(i));
+        	}
         }
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -127,8 +139,14 @@ public class CSV implements Cloneable{
      * @return A list where the missing values are converted to null.
      */
     protected List<String> getValuesWithoutMissing(String[] line){
-        //TODO Complete the code
-        throw new UnsupportedOperationException();
+    	List<String> l = new ArrayList<>();
+    	for (int i = 0; i < line.length; i++) {
+    		if (line[i] == null || missingValues.contains(line[i]))
+    			l.add(null);
+    		else
+    			l.add(line[i]);
+    	}
+    	return l;
     }
 
     /**
@@ -136,17 +154,15 @@ public class CSV implements Cloneable{
      * @return name of all columns
      */
     public List<String> getColumnsNames() {
-        //TODO Complete the code
-        throw new UnsupportedOperationException();
+    	return new ArrayList<String>(features.keySet());
     }
 
     /**
      * Getter of field features
      * @return value of features
      */
-    public  Map<String,Feature> getFeatures() {
-        //TODO Complete the code
-        throw new UnsupportedOperationException();
+    public Map<String,Feature> getFeatures() {
+    	return features;
     }
 
 
@@ -155,8 +171,7 @@ public class CSV implements Cloneable{
      * @return value of missingValues
      */
     public List<String> getMissingValues() {
-        //TODO Complete the code
-        throw new UnsupportedOperationException();
+    	return missingValues;
     }
 
     /**
@@ -164,8 +179,7 @@ public class CSV implements Cloneable{
      * @return sep field
      */
     public char getSep(){
-        //TODO Complete the code
-        throw new UnsupportedOperationException();
+        return sep;
     }
 
     /**
@@ -173,8 +187,7 @@ public class CSV implements Cloneable{
      * @return path field
      */
     public String getPath(){
-        //TODO Complete the code
-        throw new UnsupportedOperationException();
+    	return path;
     }
 
     /**
@@ -188,10 +201,11 @@ public class CSV implements Cloneable{
 
     /**
      * Add or update a feature. This method should update features with a new or updated feature
-     * @param feature Feature tu add to CSV or update.
+     * @param feature Feature to add to CSV or update.
      */
     public void addOrUpdateFeature(Feature feature){
-        //TODO complete code
+        
+    	//TODO complete code
         throw new UnsupportedOperationException();
     }
 
@@ -202,8 +216,10 @@ public class CSV implements Cloneable{
      * @throws CSVException Raised when the feature is not in the CSV
      */
     public Feature getFeature(String name) throws CSVException {
-        //TODO complete code
-        throw new UnsupportedOperationException();
+    	Feature f = features.get(name);
+    	if (f == null) 
+    		throw new CSVException(CSVException.NO_FEATURE_EXCEPTION, name);
+    	return f;
     }
 
     @Override
