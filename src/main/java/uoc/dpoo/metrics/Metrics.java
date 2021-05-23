@@ -12,7 +12,7 @@ import java.util.List;
 public class Metrics {
 
     /**
-     * List of Tuples that contains the true label and th predicted one.
+     * List of Tuples that contains the true label and the predicted one.
      */
     private final List<Pair> results;
 
@@ -21,8 +21,7 @@ public class Metrics {
      * @param results List of tuples with true and predicted labels
      */
     public Metrics(List<Pair> results){
-        //TODO Complete code
-        throw new UnsupportedOperationException();
+    	this.results = results;
     }
 
     /**
@@ -31,8 +30,8 @@ public class Metrics {
      * @return the accuracy value
      */
     public double accuracy(){
-        //TODO Complete code
-        throw new UnsupportedOperationException();
+    	double accurate = trueNegative() + truePositive();
+    	return (accurate) / (accurate + falseNegative() + falsePositive());
     }
 
     /**
@@ -41,14 +40,11 @@ public class Metrics {
      * FP | TP
      */
     public void confusionMatrix(){
-        //TODO complete code
         DecimalFormat format = new DecimalFormat("#.##");
         System.out.println(" |0\t\t1");
         System.out.println("-----------");
-        System.out.println("0|"+ format.format(null) +"\t\t"+ format.format(null));
-        System.out.println("1|"+ format.format(null) +"\t\t"+ format.format(null));
-        throw new UnsupportedOperationException();
-
+        System.out.println("0|"+ format.format(trueNegative()) +"\t\t"+ format.format(falseNegative()));
+        System.out.println("1|"+ format.format(falsePositive()) +"\t\t"+ format.format(truePositive()));
     }
 
     /**
@@ -57,8 +53,7 @@ public class Metrics {
      * @return the recall value
      */
     public double recall(){
-        //TODO Complete code
-        throw new UnsupportedOperationException();
+    	return truePositive() / (truePositive() + falseNegative());
     }
 
     /**
@@ -67,8 +62,7 @@ public class Metrics {
      * @return the precision value
      */
     public double precision(){
-        //TODO Complete code
-        throw new UnsupportedOperationException();
+    	return truePositive() / (truePositive() + falsePositive());
     }
 
     /**
@@ -77,8 +71,7 @@ public class Metrics {
      * @return the f1 value
      */
     public double f1(){
-        //TODO Complete code
-        throw new UnsupportedOperationException();
+    	return 2 / ((1/recall()) + (1/precision()));
     }
 
     /**
@@ -87,8 +80,13 @@ public class Metrics {
      * @return number of true positives
      */
     private double truePositive(){
-        //TODO Complete code
-        throw new UnsupportedOperationException();    }
+    	double counter = 0;
+    	for (Pair p : results) {
+    		if (p.getValue().equals("1") && p.getPrediction().equals("1"))
+    			counter += 1;    		
+    	}
+    	return counter;
+    }
 
     /**
      * Returns the number of true negatives.
@@ -96,8 +94,13 @@ public class Metrics {
      * @return number of true negatives
      */
     private double trueNegative(){
-        //TODO Complete code
-        throw new UnsupportedOperationException();    }
+    	double counter = 0;
+    	for (Pair p : results) {
+    		if (p.getValue().equals("0") && p.getPrediction().equals("0"))
+    			counter += 1;    		
+    	}
+    	return counter;
+    }
 
     /**
      * Returns the number of false positives.
@@ -105,8 +108,13 @@ public class Metrics {
      * @return number of false positives
      */
     private double falsePositive(){
-        //TODO Complete code
-        throw new UnsupportedOperationException();    }
+    	double counter = 0;
+    	for (Pair p : results) {
+    		if (p.getValue().equals("0") && p.getPrediction().equals("1"))
+    			counter += 1;    		
+    	}
+    	return counter;
+    }
 
     /**
      * Returns the number of false negatives.
@@ -114,6 +122,11 @@ public class Metrics {
      * @return number of true positives
      */
     private double falseNegative(){
-        //TODO Complete code
-        throw new UnsupportedOperationException();    }
+    	double counter = 0;
+    	for (Pair p : results) {
+    		if (p.getValue().equals("1") && p.getPrediction().equals("0"))
+    			counter += 1;    		
+    	}
+    	return counter;
+    }
 }
