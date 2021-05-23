@@ -17,8 +17,7 @@ public class Train {
      * @param csv used to train the classification model
      */
     public Train(CSV csv) {
-        //TODO Complete code
-        throw new UnsupportedOperationException();
+    	this.csv = csv;
     }
 
     /**
@@ -29,12 +28,13 @@ public class Train {
      * @throws Exception if errors happen
      */
     public NaiveBayesClassifierMapImpl process(String classifierName, String classColumn) throws Exception {
-        //TODO Complete code
-        throw new UnsupportedOperationException();
+    	return new NaiveBayesClassifierMapImpl(classifierName, getPossibleValues(classColumn));
     }
 
     private String[] getPossibleValues(String column) throws CSVException {
-        //TODO Complete code
-        throw new UnsupportedOperationException();
+    	if (!csv.getColumnsNames().contains(column))
+    		throw new CSVException(CSVException.NO_FEATURE_EXCEPTION, column);
+    	Set<String> s = new HashSet<> (csv.getFeature(column).getValues());
+    	return Arrays.copyOf(s.toArray(), s.size(), String[].class);
     }
 }

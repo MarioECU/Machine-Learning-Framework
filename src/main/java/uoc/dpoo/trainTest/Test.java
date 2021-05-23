@@ -21,9 +21,15 @@ public class Test {
      */
     public static List<Pair> comparation(CSV csvFileTest, String columnClass,
                                          INaiveBayesClassifier trainedModel) throws ClassifyException, CSVException {
-
-        //TODO Complete code
-        throw new UnsupportedOperationException();
+    	if (!csvFileTest.getColumnsNames().contains(columnClass))
+    		throw new CSVException(CSVException.NO_FEATURE_EXCEPTION, columnClass);
+    	List<Pair> pairs = new ArrayList<>();
+    	for (String value : csvFileTest.getFeature(columnClass).getValues()) {
+    		Map<String, String> m = new HashMap<>();
+    		m.put(columnClass, value);
+			pairs.add(new Pair(value, trainedModel.classify(m, false).getClassProbabilities()[0].getCategory()));
+    	}
+    	return pairs;
     }
 }
 
