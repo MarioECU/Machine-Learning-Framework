@@ -161,9 +161,7 @@ public abstract class Statistics<T> {
 				try {
 					Double newValue = Double.parseDouble(value);
 					newValues.add(newValue);
-				} catch (NumberFormatException e) {
-					e.printStackTrace();
-				}
+				} catch (NumberFormatException e) {}
 			}
 		}
 		return newValues.stream().mapToDouble(value -> value);

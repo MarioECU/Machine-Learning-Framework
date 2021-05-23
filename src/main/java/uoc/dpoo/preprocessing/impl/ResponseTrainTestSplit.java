@@ -19,8 +19,8 @@ public class ResponseTrainTestSplit {
 	 * @param csvTest  Testing split
 	 */
 	public ResponseTrainTestSplit(CSV csvTrain, CSV csvTest) {
-		// TODO Complete code
-		throw new UnsupportedOperationException();
+		this.csvTrain = csvTrain;
+		this.csvTest = csvTest;
 	}
 
 	/**
@@ -29,16 +29,14 @@ public class ResponseTrainTestSplit {
 	 * @return csvTrain
 	 */
 	public CSV getCsvTrain() {
-		// TODO Complete code
-		throw new UnsupportedOperationException();
+		return this.csvTrain;
 	}
 
 	/**
 	 * Setter for the training split
 	 */
 	public void setCsvTrain(CSV csvTrain) {
-		// TODO Complete code
-		throw new UnsupportedOperationException();
+		this.csvTrain = csvTrain;
 	}
 
 	/**
@@ -47,15 +45,13 @@ public class ResponseTrainTestSplit {
 	 * @return csvTest
 	 */
 	public CSV getCsvTest() {
-		// TODO Complete code
-		throw new UnsupportedOperationException();
+		return this.csvTest;
 	}
 
 	/**
 	 * Setter for the testing split
 	 */
 	public void setCsvTest(CSV csvTest) {
-		// TODO Complete code
-		throw new UnsupportedOperationException();
+		this.csvTest = csvTest;
 	}
 }
