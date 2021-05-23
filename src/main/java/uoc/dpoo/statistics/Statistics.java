@@ -133,6 +133,8 @@ public abstract class Statistics<T> {
 	 * @return True if it´s a missing value, false in other cases.
 	 */
 	protected boolean isMissingValue(String value) {
+		if (value == null)
+			return true;
 		return this.csv.getMissingValues().contains(value);
 	}
 
