@@ -7,8 +7,10 @@ import uoc.dpoo.io.CSV;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.opencsv.exceptions.CsvException;
 
@@ -31,8 +33,7 @@ public class SelectFeatures extends Preprocessing {
 	 * @throws Exception raised if errors happen
 	 */
 	public CSV process(String column) throws Exception {
-		CSV newCsv = new CSV(csv.getPath(), csv.getSep());
-		newCsv.addOrUpdateFeature(csv.getFeature(column));
+		CSV newCsv = process(new String[] { column });
 
 		return newCsv;
 	}
@@ -45,9 +46,16 @@ public class SelectFeatures extends Preprocessing {
 	 * @throws Exception raised if errors happen
 	 */
 	public CSV process(String[] columns) throws Exception {
-		CSV newCsv = new CSV(csv.getPath(), csv.getSep());
-		for (String column : columns) {
-			newCsv.addOrUpdateFeature(csv.getFeature(column));
+		CSV newCsv = csv.clone();
+		List<String> cols = Arrays.asList(columns);
+
+		Iterator<String> iterator = newCsv.getFeatures().keySet().iterator();
+
+		while (iterator.hasNext()) {
+			String featureName = iterator.next();
+			if (!cols.contains(featureName)) {
+				iterator.remove();
+			}
 		}
 
 		return newCsv;
