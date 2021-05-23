@@ -1,12 +1,13 @@
 package uoc.dpoo.preprocessing.impl;
 
-import uoc.dpoo.io.Feature;
 import uoc.dpoo.preprocessing.Preprocessing;
-import uoc.dpoo.io.CSV;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import uoc.dpoo.io.CSV;
+import uoc.dpoo.io.Feature;
 
 public class RemoveMissingData extends Preprocessing {
 
@@ -15,7 +16,7 @@ public class RemoveMissingData extends Preprocessing {
 	 * 
 	 * @param csv CSV to which remove the missing data
 	 */
-	
+
 	public RemoveMissingData(CSV csv) {
 		super(csv);
 	}
@@ -27,14 +28,32 @@ public class RemoveMissingData extends Preprocessing {
 	 * @throws Exception when errors happen
 	 */
 	public CSV process() throws Exception {
-		CSV newCsv = new CSV(csv.getPath(), csv.getSep());
+		CSV newCsv = csv.clone();
+		Map<String, Feature> features = newCsv.getFeatures();
+		List<Integer> naRows = new ArrayList<>();
 
-		for (int i = 0; i < csv.getRowsNumber(); i++) {
-			Map<String, String> row = csv.getRow(i);
-			
+		for (int i = 0; i < newCsv.getRowsNumber(); i++) {
+			Map<String, String> row = newCsv.getRow(i);
+
+			if (row.values().contains(null)) {
+				naRows.add(i);
+			}
+		}
+
+		for (Feature feature : features.values()) {
+			List<String> values = feature.getValues();
+			List<String> updatedValues = new ArrayList<>();
+
+			for (int i = 0; i < values.size(); i++) {
+				if (!naRows.contains(i)) {
+					updatedValues.add(values.get(i));
+				}
+			}
+
+			feature.setValues(updatedValues);
+			newCsv.addOrUpdateFeature(feature);
 		}
 
 		return newCsv;
 	}
-
 }

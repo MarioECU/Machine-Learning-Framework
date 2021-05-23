@@ -1,14 +1,8 @@
 package uoc.dpoo.preprocessing.impl;
 
 import uoc.dpoo.io.CSV;
-import uoc.dpoo.io.Feature;
 import uoc.dpoo.preprocessing.Preprocessing;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class TrainTestSplit extends Preprocessing {
 	/**

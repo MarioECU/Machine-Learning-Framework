@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uoc.dpoo.io.Feature;
-import uoc.dpoo.io.FeatureType;
 import uoc.dpoo.preprocessing.Preprocessing;
 
 public class NormalizeMINMAX extends Preprocessing {
