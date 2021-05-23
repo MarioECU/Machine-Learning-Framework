@@ -66,7 +66,11 @@ public class Feature implements Cloneable {
 	 */
 	private boolean isNumber() {
 		try {
-			values.stream().forEach(value -> Double.parseDouble(value));
+			for (String value : values) {
+				if (value != null) {
+					Double.parseDouble(value);
+				}
+			}
 			return true;
 		} catch (NumberFormatException nfe) {
 			return false;

@@ -1,8 +1,12 @@
 package uoc.dpoo.preprocessing.impl;
 
-import uoc.dpoo.io.CSV;
-import uoc.dpoo.preprocessing.Preprocessing;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
+import uoc.dpoo.io.CSV;
+import uoc.dpoo.io.Feature;
+import uoc.dpoo.preprocessing.Preprocessing;
 
 public class TrainTestSplit extends Preprocessing {
 	/**
@@ -26,7 +30,43 @@ public class TrainTestSplit extends Preprocessing {
 	 * @throws Exception if errors happen
 	 */
 	public ResponseTrainTestSplit process(float testPercentage, boolean randomize) throws Exception {
-		// TODO Complete code
-		throw new UnsupportedOperationException();
+		CSV csvTrain = csv.clone();
+		CSV csvTest = csv.clone();
+
+		Map<String, Feature> features = csv.getFeatures();
+
+		int testAmount = (int) (csv.getRowsNumber() * testPercentage);
+		int trainingAmount = csv.getRowsNumber() - testAmount;
+
+		for (Feature feature : features.values()) {
+			List<String> values = feature.getValues();
+			List<String> trainFeatureValues = new ArrayList<>();
+			List<String> testFeatureValues = new ArrayList<>();
+
+			for (int i = 0; i < values.size(); i++) {
+				if (i < trainingAmount - 1) {
+					trainFeatureValues.add(values.get(i));
+				} else {
+					testFeatureValues.add(values.get(i));
+				}
+			}
+
+			Feature trainFeature = feature.clone();
+			Feature testFeature = feature.clone();
+
+			trainFeature.setValues(trainFeatureValues);
+			testFeature.setValues(testFeatureValues);
+
+			csvTrain.addOrUpdateFeature(trainFeature);
+			csvTest.addOrUpdateFeature(testFeature);
+		}
+//		
+//		if (randomize) {
+//			
+//		} else {
+//			
+//		}
+//		
+		return new ResponseTrainTestSplit(csvTrain, csvTest);
 	}
 }
