@@ -17,8 +17,8 @@ public class Pair {
      * @param prediction class predicted by the classification model
      */
     public Pair(String value, String prediction){
-        //TODO Complete code
-        throw new UnsupportedOperationException();
+    	this.prediction = prediction;
+    	this.value = value;
     }
 
     /**
@@ -26,8 +26,7 @@ public class Pair {
      * @return boolean indicatting if prediction and ground true class match
      */
     public boolean areEquals(){
-        //TODO Complete code
-        throw new UnsupportedOperationException();
+    	return prediction.equals(value);
     }
 
     /**
@@ -35,16 +34,14 @@ public class Pair {
      * @return the predicted class
      */
     public String getPrediction() {
-        //TODO Complete code
-        throw new UnsupportedOperationException();
+    	return prediction;
     }
 
     /** Getter for the ground true class value
      * @return the ground true class value
      */
     public String getValue() {
-        //TODO Complete code
-        throw new UnsupportedOperationException();
+    	return value;
     }
 
 }
