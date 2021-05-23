@@ -1,7 +1,6 @@
 package uoc.dpoo.menu;
 
 import uoc.dpoo.classifier.bayes.INaiveBayesClassifier;
-import uoc.dpoo.exceptions.CSVException;
 import uoc.dpoo.exceptions.MenuException;
 import uoc.dpoo.preprocessing.PreprocessingEnum;
 import uoc.dpoo.preprocessing.impl.*;
@@ -9,8 +8,6 @@ import uoc.dpoo.metrics.Metrics;
 import uoc.dpoo.io.CSV;
 import uoc.dpoo.statistics.Statistics;
 import uoc.dpoo.trainTest.Pair;
-import uoc.dpoo.trainTest.Test;
-import uoc.dpoo.trainTest.Train;
 
 import java.io.File;
 import java.util.List;

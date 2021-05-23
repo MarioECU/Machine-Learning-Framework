@@ -4,7 +4,6 @@ import uoc.dpoo.classifier.bayes.ClassifyException;
 import uoc.dpoo.classifier.bayes.INaiveBayesClassifier;
 import uoc.dpoo.exceptions.CSVException;
 import uoc.dpoo.io.CSV;
-import uoc.dpoo.classifier.bayes.IClassification;
 import java.util.*;
 
 public class Test {

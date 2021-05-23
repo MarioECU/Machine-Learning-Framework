@@ -2,14 +2,10 @@ package uoc.dpoo.statistics.impl;
 
 import uoc.dpoo.exceptions.CSVException;
 import uoc.dpoo.io.CSV;
-import uoc.dpoo.io.Feature;
 import uoc.dpoo.io.FeatureType;
 import uoc.dpoo.statistics.Statistics;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.DoubleStream;
-import java.util.stream.Stream;
 
 public class MissingCount extends Statistics<Long> {
 

@@ -5,7 +5,6 @@ import uoc.dpoo.io.CSV;
 import uoc.dpoo.statistics.Statistics;
 
 import java.util.List;
-import java.util.stream.DoubleStream;
 
 public class Max extends Statistics<Double> {
 

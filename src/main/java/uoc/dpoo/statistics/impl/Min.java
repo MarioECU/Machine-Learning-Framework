@@ -2,12 +2,9 @@ package uoc.dpoo.statistics.impl;
 
 import uoc.dpoo.exceptions.CSVException;
 import uoc.dpoo.io.CSV;
-import uoc.dpoo.io.Feature;
 import uoc.dpoo.statistics.Statistics;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.DoubleStream;
 
 public class Min extends Statistics<Double> {
 
