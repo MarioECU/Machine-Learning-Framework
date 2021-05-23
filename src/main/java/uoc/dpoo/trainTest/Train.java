@@ -28,7 +28,12 @@ public class Train {
      * @throws Exception if errors happen
      */
     public NaiveBayesClassifierMapImpl process(String classifierName, String classColumn) throws Exception {
-    	return new NaiveBayesClassifierMapImpl(classifierName, getPossibleValues(classColumn));
+    	NaiveBayesClassifierMapImpl p = new NaiveBayesClassifierMapImpl(classifierName, getPossibleValues(classColumn));
+    	for (int i = 0; i < csv.getRowsNumber(); i++) {
+    		Map<String,String> m = csv.getRow(i);
+    		p.learn(m.get(classColumn), m);
+    	}
+    	return p;
     }
 
     private String[] getPossibleValues(String column) throws CSVException {
