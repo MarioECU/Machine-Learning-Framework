@@ -276,10 +276,9 @@ public class Menu {
 		System.out.println("Indica si la generación es random (T|F)");
 		boolean random = Boolean.parseBoolean(this.reader.read());
 
-		// TODO complete the code
-		ResponseTrainTestSplit response = null;
-		trainCSV = null;
-		testCSV = null;
+		ResponseTrainTestSplit response = new TrainTestSplit(csv).process(test, random);
+		trainCSV = response.getCsvTrain();
+		testCSV = response.getCsvTest();
 		String outputTrain = trainCSV.write(sep, PreprocessingEnum.TRAIN_SPLIT_SUFFIX);
 		String outputTest = testCSV.write(sep, PreprocessingEnum.TEST_SPLIT_SUFFIX);
 		System.out.println("Generado fichero: " + outputTrain);
