@@ -10,8 +10,6 @@ import java.util.List;
 import uoc.dpoo.io.Feature;
 import uoc.dpoo.io.FeatureType;
 import uoc.dpoo.preprocessing.Preprocessing;
-import uoc.dpoo.statistics.impl.Max;
-import uoc.dpoo.statistics.impl.Min;
 
 public class NormalizeMINMAX extends Preprocessing {
 
@@ -32,38 +30,32 @@ public class NormalizeMINMAX extends Preprocessing {
 	 * @throws Exception raised if errors happen
 	 */
 	public CSV process(String column) throws Exception {
-		CSV newCSv = new CSV(csv.getPath(), csv.getSep());
-		Feature feature = csv.getFeature(column);
+		CSV newCSv = csv.clone();
+		Feature feature = newCSv.getFeature(column);
 		List<String> values = feature.getValues();
 
-		if (!feature.getType().equals(FeatureType.NUMBER)) {
-			throw new CSVException(CSVException.INVALID_FEATURE_TYPE);
-		}
-
 		List<String> normalizedValues = new ArrayList<>();
-		double max = new Max(csv).process(column);
-		double min = new Min(csv).process(column);
+		double max = Util.convertToDouble(values).max().getAsDouble();
+		double min = Util.convertToDouble(values).min().getAsDouble();
 
 		for (String value : values) {
 			double val = Double.parseDouble(value);
 			double nValue;
 
 			if (val == min) {
-				nValue = 0;
+				nValue = 0.0;
 			} else if (val == max) {
-				nValue = 1;
+				nValue = 1.0;
 			} else {
 				nValue = normalize(val, min, max);
 			}
 			normalizedValues.add(String.valueOf(nValue));
 		}
 
-		Feature normalizedFeature = new Feature(feature.getName(), normalizedValues);
+		feature.setValues(normalizedValues);
+		newCSv.addOrUpdateFeature(feature);
 
-		newCSv.addOrUpdateFeature(normalizedFeature);
-
-		return csv;
-
+		return newCSv;
 	}
 
 	/**
@@ -77,34 +69,29 @@ public class NormalizeMINMAX extends Preprocessing {
 		CSV newCSv = new CSV(csv.getPath(), csv.getSep());
 
 		for (String column : columns) {
-			Feature feature = csv.getFeature(column);
+			Feature feature = newCSv.getFeature(column);
 			List<String> values = feature.getValues();
 
-			if (!feature.getType().equals(FeatureType.NUMBER)) {
-				throw new CSVException(CSVException.INVALID_FEATURE_TYPE);
-			}
-
 			List<String> normalizedValues = new ArrayList<>();
-			double max = new Max(csv).process(column);
-			double min = new Min(csv).process(column);
+			double max = Util.convertToDouble(values).max().getAsDouble();
+			double min = Util.convertToDouble(values).min().getAsDouble();
 
 			for (String value : values) {
 				double val = Double.parseDouble(value);
 				double nValue;
 
 				if (val == min) {
-					nValue = 0;
+					nValue = 0.0;
 				} else if (val == max) {
-					nValue = 1;
+					nValue = 1.0;
 				} else {
 					nValue = normalize(val, min, max);
 				}
 				normalizedValues.add(String.valueOf(nValue));
 			}
 
-			Feature normalizedFeature = new Feature(feature.getName(), normalizedValues);
-
-			newCSv.addOrUpdateFeature(normalizedFeature);
+			feature.setValues(normalizedValues);
+			newCSv.addOrUpdateFeature(feature);
 		}
 
 		return newCSv;

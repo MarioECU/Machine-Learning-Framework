@@ -154,10 +154,6 @@ public class Feature implements Cloneable {
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-    	try {
-			return new Feature(name, new ArrayList<>(values));
-		} catch (Exception e) {
-			throw new CloneNotSupportedException();
-		}
+    	return super.clone();
     }
 }
