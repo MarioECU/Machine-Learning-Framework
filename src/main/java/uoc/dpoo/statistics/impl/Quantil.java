@@ -59,11 +59,40 @@ public class Quantil extends Statistics<Double> {
 		DoubleStream sortedValues = super.convertToDouble(values).sorted();
 		double[] vals = sortedValues.toArray();
 
-		if (vals.length < 4) {
+		if (vals.length == 0) {
+			return Double.NaN;
+		}
+
+		if (vals.length < 4 && quantil == 3) {
+			return vals[vals.length - 1];
+		}
+
+		else if (vals.length < 4) {
 			return getMedian(vals);
 		}
 
-		return 11.0;
+		else if (quantil == 1) {
+			return getMedian(new double[] { vals[quantil - 1], vals[quantil] });
+		}
+
+		else if (quantil == 2 && vals.length % 2 == 0) {
+			return getMedian(new double[] { vals[quantil - 1], vals[quantil] });
+		}
+
+		else if (quantil == 2 && vals.length % 2 != 0) {
+			return getMedian(vals);
+		}
+
+		else if (quantil == 3 && vals.length % 2 == 0) {
+			return getMedian(new double[] { vals[quantil - 1], vals[quantil] });
+		}
+
+		else if (quantil == 3 && vals.length % 2 != 0) {
+			return getMedian(new double[] { vals[quantil], vals[quantil + 1] });
+		}
+
+		return getMedian(vals);
+
 	}
 
 	private Double getMedian(double[] values) {

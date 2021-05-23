@@ -32,7 +32,6 @@ public class MissingCount extends Statistics<Long> {
 		} else {
 			return missingValuesOther(values);
 		}
-
 	}
 
 	/**
