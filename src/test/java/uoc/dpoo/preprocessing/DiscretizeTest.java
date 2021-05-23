@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import uoc.dpoo.io.CSV;
 import uoc.dpoo.preprocessing.impl.DiscretizeEqualWidth;
 import java.nio.file.Paths;
+import java.util.Locale;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.fail;
@@ -20,7 +21,7 @@ public class DiscretizeTest {
         try {
             mainPath = Paths.get(Objects.requireNonNull(DiscretizeTest.class.getClassLoader().getResource("titanic.csv")).toURI()).toString();
             System.out.println("CSV LOADED");
-            //Locale.setDefault(new Locale("en", "US"));
+            Locale.setDefault(new Locale("en", "US"));
         } catch (Exception e) {
             e.printStackTrace();
             fail("TEST INIT FAILED: Check exception trace");

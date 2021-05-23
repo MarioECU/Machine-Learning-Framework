@@ -72,6 +72,6 @@ public class Util {
 	 * @return doubleStream containing the doubles, for NAs, nulls are returned
 	 */
 	public static DoubleStream convertToDouble(List<String> values) {
-		return values.stream().mapToDouble(value -> Double.parseDouble(value));
+		return values.stream().filter(value -> value != null).mapToDouble(value -> Double.parseDouble(value));
 	}
 }

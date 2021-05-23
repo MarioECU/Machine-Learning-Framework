@@ -30,6 +30,10 @@ public class NormalizeMINMAX extends Preprocessing {
 	 * @throws Exception raised if errors happen
 	 */
 	public CSV process(String column) throws Exception {
+		if (!csv.getColumnsNames().contains(column)) {
+			throw new CSVException(CSVException.NO_FEATURE_EXCEPTION, column);
+		}
+
 		CSV newCSv = csv.clone();
 		Feature feature = newCSv.getFeature(column);
 		List<String> values = feature.getValues();
@@ -69,6 +73,10 @@ public class NormalizeMINMAX extends Preprocessing {
 		CSV newCSv = new CSV(csv.getPath(), csv.getSep());
 
 		for (String column : columns) {
+			if (!csv.getColumnsNames().contains(column)) {
+				throw new CSVException(CSVException.NO_FEATURE_EXCEPTION, column);
+			}
+			
 			Feature feature = newCSv.getFeature(column);
 			List<String> values = feature.getValues();
 

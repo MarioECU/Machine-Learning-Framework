@@ -1,18 +1,12 @@
 package uoc.dpoo.preprocessing.impl;
 
-import uoc.dpoo.common.Util;
-import uoc.dpoo.exceptions.CSVException;
 import uoc.dpoo.preprocessing.Preprocessing;
 import uoc.dpoo.io.CSV;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-import com.opencsv.exceptions.CsvException;
 
 public class SelectFeatures extends Preprocessing {
 
