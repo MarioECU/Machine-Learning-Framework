@@ -8,6 +8,8 @@ import uoc.dpoo.metrics.Metrics;
 import uoc.dpoo.io.CSV;
 import uoc.dpoo.statistics.Statistics;
 import uoc.dpoo.trainTest.Pair;
+import uoc.dpoo.trainTest.Test;
+import uoc.dpoo.trainTest.Train;
 
 import java.io.File;
 import java.util.List;
@@ -299,9 +301,8 @@ public class Menu {
 		System.out.println("Indica el nombre de la columna que contiene el valor de clasificación");
 		String column = this.reader.read();
 
-		// TODO complete the code
-		model = null;
-		System.out.println("El modelo se ha entrado satisfactoriamente");
+		model = new Train(testCSV).process("Classifier", column);
+		System.out.println("El modelo se ha entrenado satisfactoriamente");
 	}
 
 	/**
@@ -322,17 +323,13 @@ public class Menu {
 		System.out.println("Indica el nombre de la columna que contiene el valor de clasificación");
 		String column = this.reader.read();
 
-		// TODO complete the code
-		List<Pair> results = null;
-		Metrics metrics = null;
-		System.out.println("Accuracy:" + String.format("%2f", null));
-		System.out.println("Precision:" + String.format("%2f", null));
-		System.out.println("Recall:" + String.format("%2f", null));
-		System.out.println("F1:" + String.format("%2f", null));
-
-		// TODO print confusionMatrix
-		throw new UnsupportedOperationException();
-
+		List<Pair> results = Test.comparation(testCSV, column, model);
+		Metrics metrics = new Metrics(results);
+		System.out.println("Accuracy:" + String.format("%2f", metrics.accuracy()));
+		System.out.println("Precision:" + String.format("%2f", metrics.precision()));
+		System.out.println("Recall:" + String.format("%2f", metrics.recall()));
+		System.out.println("F1:" + String.format("%2f", metrics.f1()));
+		metrics.confusionMatrix();
 	}
 
 	/**
