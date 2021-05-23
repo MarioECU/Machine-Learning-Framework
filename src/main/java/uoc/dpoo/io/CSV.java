@@ -205,9 +205,7 @@ public class CSV implements Cloneable{
      * @param feature Feature to add to CSV or update.
      */
     public void addOrUpdateFeature(Feature feature){
-        
-    	//TODO complete code
-        throw new UnsupportedOperationException();
+    	features.put(feature.getName(), feature);
     }
 
     /**
